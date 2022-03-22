@@ -27,13 +27,15 @@ jobs:
         path: |
           Pods
           PopcornTime.xcworkspace
-        key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}
+        key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}_v2
 
     - name: Get dependencies       
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        bundle exec pod repo update
+        cp Podfile.lock test
+        #bundle exec pod repo update
         bundle exec pod install
+        diff Podfile.lock test
         
     - name: Compile
       run: |
