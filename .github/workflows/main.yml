@@ -17,25 +17,11 @@ jobs:
         
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: "2.7.5"
+        ruby-version: "2.7.1"
         bundler-cache: true
         
     - run: ls -al
-                   
-    - name: Get cache
-      uses: actions/cache@v3
-      id: cache
-      with:
-        path: |
-          Pods
-          PopcornTime.xcworkspace
-        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-v5
-        
-    - name: Get dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        bundle exec pod repo update
-        bundle exec pod install
+                 
         
     - name: Compile
       run: |
