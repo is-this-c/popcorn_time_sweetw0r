@@ -14,17 +14,17 @@ jobs:
       with:
         submodules: true
 
-    - name: Select Xcode
+    - name: Select Xcode 12.5.1
       run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
 
-    - name: Use cache
+    - name: Get cache
       uses: actions/cache@v3
       id: cache
       with:
         path: |
-          Pods 
+          Pods
           PopcornTime.xcworkspace
-        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-v2
+        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-v3
 
     - name: Get dependencies
       if: steps.cache.outputs.cache-hit != 'true'
@@ -45,18 +45,18 @@ jobs:
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
           ONLY_ACTIVE_ARCH=NO \
-          clean build \
           | tee build.log \
           | xcpretty
         
-    - name: Generate an unsigned debug ipa
+    - name: Package
       run: |
         cd ~
         mkdir Payload
-        mv ~/Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app ~/Payload/
+        cp ~/Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app ~/Payload/
         zip -r popcorn_time.ipa Payload
+        rm -r ~/Payload/
         
-    - name: Upload ipa
+    - name: Upload
       uses: actions/upload-artifact@v2.2.0
       with:
         name: 'popcorn_time'
