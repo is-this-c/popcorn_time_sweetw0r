@@ -36,7 +36,7 @@ jobs:
         
     - name: Compile
       run: |
-        xcodebuild clean build archive \
+        xcodebuild archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
           -sdk iphoneos \
@@ -45,6 +45,7 @@ jobs:
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
           ONLY_ACTIVE_ARCH=NO \
+          clean build \
           | tee build.log \
           | xcpretty
         
