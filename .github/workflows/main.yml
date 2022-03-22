@@ -21,7 +21,7 @@ jobs:
       id: cache
       uses: actions/cache@v2
       with:
-        path: Frameworks
+        path: Pods
         key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}
 
     - name: get dependencies
