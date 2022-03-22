@@ -40,7 +40,6 @@ jobs:
     - name: Compile
       run: |
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
-        bundle exec pod install
         xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
