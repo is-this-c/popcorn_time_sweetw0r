@@ -31,4 +31,32 @@ jobs:
         bundle install
         bundle exec pod repo update
         bundle exec pod install
-
+        
+    - name: Compile
+      run: |
+        sudo xcode-select -s /Applications/Xcode_12.5.1.app
+        xcodebuild clean archive \
+          -workspace PopcornTime.xcworkspace \
+          -scheme PopcornTimeiOS \
+          -sdk iphoneos \
+          -configuration Debug \
+          CODE_SIGN_IDENTITY='' \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO \
+          ONLY_ACTIVE_ARCH=NO \
+          | tee build.log \
+          | xcpretty
+        
+    - name: Package
+      run: |
+        cd ~
+        mkdir Payload
+        cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app Payload
+        zip -r popcorn_time_ios.ipa Payload
+        rm -r Payload
+        
+    - name: Upload
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: 'popcorn_time_ios'
+        path: ~/popcorn_time_ios.ipa
