@@ -22,7 +22,7 @@ jobs:
         path: |
           Pods
           PopcornTime.xcworkspace
-        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-v3
+        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-v4
 
     - name: Get dependencies
       if: steps.cache.outputs.cache-hit != 'true'
@@ -35,7 +35,18 @@ jobs:
     - name: Compile
       run: |
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
-        xcodebuild clean build \
+        xcodebuild clean archive \
+          -workspace PopcornTime.xcworkspace \
+          -scheme PopcornTimeiOS \
+          -sdk iphoneos \
+          -configuration Debug \
+          CODE_SIGN_IDENTITY='' \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO \
+          ONLY_ACTIVE_ARCH=NO \
+          | tee build.log \
+          | xcpretty
+        xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
           -sdk iphoneos \
@@ -52,7 +63,7 @@ jobs:
         cd ~
         mkdir Payload
         cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app Payload
-        zip -r popcorn_time.ipa Payload
+        zip -r popcorn_time_ios.ipa Payload
         rm -r Payload
         
     - name: Upload
