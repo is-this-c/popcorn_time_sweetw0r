@@ -34,7 +34,8 @@ jobs:
     - name: actual build
       run: |
         set -o pipefail && xcodebuild archive -workspace PopcornTime.xcworkspace -scheme PopcornTimeiOS -sdk iphoneos -configuration Debug clean build CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=NO | tee build.log | xcpretty
-        ls -al
+        ls -al PopcornTime.xcodeproj
+        ls -al PopcornTime.xcworkspace
         
     - name: generate unsigned debug ipa
       run: |
