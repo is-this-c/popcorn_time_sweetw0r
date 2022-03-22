@@ -51,12 +51,12 @@ jobs:
       run: |
         cd ~
         mkdir Payload
-        cp -r ~/Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app ~/Payload/
+        cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app Payload
         zip -r popcorn_time.ipa Payload
-        rm -r ~/Payload/
+        rm -r Payload
         
     - name: Upload
       uses: actions/upload-artifact@v2.2.0
       with:
-        name: 'popcorn_time'
-        path: ~/popcorn_time.ipa
+        name: 'popcorn_time_ios'
+        path: ~/popcorn_time_ios.ipa
