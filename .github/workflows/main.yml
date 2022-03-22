@@ -22,7 +22,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: Frameworks
-        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-${{ hashFiles('Gemfile.lock') }}-v2
+        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-${{ hashFiles('Gemfile.lock') }}-v3
 
     - name: get dependencies
       if: steps.cache.outputs.cache-hit != 'true'
