@@ -25,7 +25,7 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}
 
     - name: get dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      #if: steps.cache.outputs.cache-hit != 'true'
       run: |
         gem install bundler
         bundle install
