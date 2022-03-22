@@ -22,17 +22,17 @@ jobs:
       uses: actions/cache@v2
       with:
         path: Frameworks
-        key: ${{ runner.os }}-${{ hashFiles('Podfile') }}-${{ hashFiles('Gemfile') }}
+        key: ${{ runner.os }}-${{ hashFiles('Podfile.lock') }}-${{ hashFiles('Gemfile.lock') }}-v2
 
     - name: get dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        gem install bundler cocoapods
+        gem install bundler
         bundle install
         bundle exec pod repo update
         bundle exec pod install
     - name: actual build
-      run: set -o pipefail && pod install && xcodebuild archive -workspace PopcornTime.xcworkspace -scheme PopcornTimeiOS -sdk iphoneos -configuration Debug clean build CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=NO | tee build.log | xcpretty
+      run: set -o pipefail && xcodebuild archive -workspace PopcornTime.xcworkspace -scheme PopcornTimeiOS -sdk iphoneos -configuration Debug clean build CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=NO | tee build.log | xcpretty
 
     - name: generate unsigned debug ipa
       run: |
