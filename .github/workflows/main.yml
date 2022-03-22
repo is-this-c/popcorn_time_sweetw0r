@@ -27,7 +27,8 @@ jobs:
         path: |
           Pods
           PopcornTime.xcworkspace
-        key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}_v2
+          Podfile.lock
+        key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}_v3
 
     - name: Get dependencies       
       if: steps.cache.outputs.cache-hit != 'true'
