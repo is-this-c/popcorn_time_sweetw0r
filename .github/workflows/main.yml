@@ -52,7 +52,7 @@ jobs:
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
           ONLY_ACTIVE_ARCH=NO
-          cat <<EOF >> export_options.plist
+          echo \
 	  <?xml version="1.0" encoding="UTF-8"?>
 	  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 	  <plist version="1.0">
@@ -60,8 +60,8 @@ jobs:
 	    <key>method</key>
 	    <string>development</string>
 	  </dict>
-	  </plist>
-	  EOF
+	  </plist> \
+	  >> export_options.plist
         xcodebuild archive \
           -exportArchive \
           -archivePath popcorn_time_ios.xcarchive \
