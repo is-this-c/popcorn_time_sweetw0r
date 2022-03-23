@@ -31,6 +31,8 @@ jobs:
         
     - name: Compile
       run: |
+        openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -sha256 -out certificate.pem -subj "/CN=iPhone Developer"
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain certificate.pem
         sudo xcode-select -s /Applications/Xcode_13.2.1.app
         xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
