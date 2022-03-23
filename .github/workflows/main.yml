@@ -22,7 +22,7 @@ jobs:
         path: |
           Pods
           PopcornTime.xcworkspace
-          Podfile.lock
+          Podfile.lock # FIXME
         key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}_v3
 
     - name: Get dependencies       
@@ -52,10 +52,9 @@ jobs:
         cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app Payload
         wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
         tar -xvf osx-ldid.tgz
-        sudo chmod +x ldid
-        ./ldid -S Payload/PopcornTime.app/PopcornTime || echo TEST
+        #sudo chmod +x ldid
+        ./ldid -S Payload/PopcornTime.app/PopcornTime
         zip -r popcorn_time_ios.ipa Payload
-        rm -r Payload
         
     - name: Upload
       uses: actions/upload-artifact@v2.2.0
