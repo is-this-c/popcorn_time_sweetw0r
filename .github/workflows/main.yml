@@ -35,7 +35,7 @@ jobs:
         xcodebuild archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimetvOS \
-          -destination generic \
+          -destination generic/platform=tvOS \
           -configuration Debug \
           CODE_SIGN_IDENTITY='' \
           CODE_SIGNING_REQUIRED=NO \
