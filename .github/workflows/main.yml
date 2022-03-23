@@ -32,9 +32,9 @@ jobs:
     - name: Compile
       run: |
         sudo xcode-select -s /Applications/Xcode_11.7.app
-        xcodebuild clean archive \
+        xcodebuild archive \
           -workspace PopcornTime.xcworkspace \
-          -scheme PopcornTimeiOS \
+          -scheme PopcornTimetvOS \
           -configuration Debug \
           CODE_SIGN_IDENTITY='' \
           CODE_SIGNING_REQUIRED=NO \
@@ -49,12 +49,12 @@ jobs:
         wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
         tar -xvf osx-ldid.tgz
         ./ldid -S Payload/PopcornTime.app/PopcornTime
-        zip -r popcorn_time_tvos.ipa Payload
+        zip -r popcorn_time.ipa Payload
         rm -r Payload
         
     - name: Upload
       uses: actions/upload-artifact@v3.0.0
       with:
-        name: 'popcorn_time_tvos'
+        name: 'popcorn_time'
         path: |
-          ~/popcorn_time_tvos.ipa
+          ~/popcorn_time.ipa
