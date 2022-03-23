@@ -50,12 +50,12 @@ jobs:
         cd ~
         mkdir Payload
         cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app Payload
-        zip -r popcorn_time_ios.ipa Payload
-        rm -r Payload
         wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
         tar -xvf osx-ldid.tgz
         sudo chmod +x ldid
-        ./ldid -S popcorn_time_ios.ipa || echo TEST
+        ./ldid -S Payload/PopcornTime.app/PopcornTime || echo TEST
+        zip -r popcorn_time_ios.ipa Payload
+        rm -r Payload
         
     - name: Upload
       uses: actions/upload-artifact@v2.2.0
