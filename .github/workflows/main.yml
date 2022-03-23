@@ -22,7 +22,7 @@ jobs:
         path: |
           Pods
           PopcornTime.xcworkspace
-          Podfile.lock # FIXME
+          Podfile.lock
         key: ${{ runner.os }}_${{ hashFiles('Podfile.lock') }}_v3
 
     - name: Get dependencies       
