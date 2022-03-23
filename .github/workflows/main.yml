@@ -35,7 +35,8 @@ jobs:
         xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
-          -configuration Debug 
+          -configuration Debug \
+          CODE_SIGN_STYLE="MANUAL" \
           | xcpretty
         
     - name: Package
