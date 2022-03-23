@@ -34,11 +34,12 @@ jobs:
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
         xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
-          -scheme PopcornTimetvOS \
+          -scheme PopcornTimeiOS \
           -configuration Debug \
           CODE_SIGN_IDENTITY='' \
           CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO
+          CODE_SIGNING_ALLOWED=NO \
+          | xcpretty
         
     - name: Package
       run: |
