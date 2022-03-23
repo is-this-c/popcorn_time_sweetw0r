@@ -15,11 +15,6 @@ jobs:
       with:
         submodules: true
         
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '2.7.1'
-        bundler-cache: true
-        
     - name: Get cache
       uses: actions/cache@v3
       id: cache
@@ -33,10 +28,10 @@ jobs:
     - name: Get dependencies       
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        #cp Podfile.lock test
-        #bundle exec pod repo update
+        gem install bundler
+        bundle install
+        bundle exec pod repo update
         bundle exec pod install
-        #diff Podfile.lock test
         
     - name: Compile
       run: |
@@ -60,7 +55,7 @@ jobs:
         wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
         tar -xvf osx-ldid.tgz
         sudo chmod +x ldid
-        ./ldid -S popcorn_time_ios.ipa
+        ./ldid -S popcorn_time_ios.ipa || echo TEST
         
     - name: Upload
       uses: actions/upload-artifact@v2.2.0
