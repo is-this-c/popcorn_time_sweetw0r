@@ -54,7 +54,6 @@ jobs:
       run: |
         cd ~
         mkdir Payload
-        cat Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app
         cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app Payload
         zip -r popcorn_time_ios.ipa Payload
         rm -r Payload
