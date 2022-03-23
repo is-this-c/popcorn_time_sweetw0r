@@ -31,14 +31,14 @@ jobs:
         
     - name: Compile
       run: |
-        openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -sha256 -out certificate.pem -subj "/CN=iPhone Developer"
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain certificate.pem
         sudo xcode-select -s /Applications/Xcode_13.2.1.app
         xcodebuild clean archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
           -configuration Debug \
-          CODE_SIGN_STYLE="MANUAL" \
+          CODE_SIGN_IDENTITY='' \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO \
           | xcpretty
         
     - name: Package
@@ -48,7 +48,7 @@ jobs:
         cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app Payload
         wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
         tar -xvf osx-ldid.tgz
-        #./ldid -S Payload/PopcornTime.app/PopcornTime
+        ./ldid -S Payload/PopcornTime.app/PopcornTime
         zip -r popcorn_time_tvos.ipa Payload
         rm -r Payload
         
