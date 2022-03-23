@@ -42,39 +42,28 @@ jobs:
       run: |
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
         xcodebuild archive \
-          -archivePath popcorn_time_ios.xcarchive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
           -sdk iphoneos \
           -configuration Debug \
           CODE_SIGN_IDENTITY='' \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO \
-          ONLY_ACTIVE_ARCH=NO
-        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" >> export_options.plist
-        echo "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">" >> export_options.plist
-        echo "<plist version=\"1.0\">" >> export_options.plist
-        echo "<dict>" >> export_options.plist
-        echo "  <key>method</key>" >> export_options.plist
-        echo "  <string>development</string>" >> export_options.plist
-        echo "</dict>" >> export_options.plist
-        echo "</plist>" >> export_options.plist
-        xcodebuild archive \
-          -exportArchive \
-          -archivePath popcorn_time_ios.xcarchive \
-          -exportPath popcorn_time_ios2.ipa \
-          -exportOptionsPlist export_options.plist
+          CODE_SIGNING_REQUIRED=NO
         
     - name: Package
       run: |
         cd ~
         mkdir Payload
-        cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/*.app Payload
+        cat Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app
+        cp -r Library/Developer/Xcode/Archives/*/*/Products/Applications/PopcornTime.app Payload
         zip -r popcorn_time_ios.ipa Payload
         rm -r Payload
+        wget wget https://github.com/sbingner/ldid/releases/download/v2.1.4/osx-ldid.tgz
+        tar -xvf osx-ldid.tgz
+        sudo chmod +x ldid
+        ldid -S popcorn_time_ios.ipa
         
     - name: Upload
       uses: actions/upload-artifact@v2.2.0
       with:
-        name: 'popcorn_time_ios.zip'
+        name: 'popcorn_time_ios'
         path: ~/popcorn_time_ios.ipa
