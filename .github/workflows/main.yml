@@ -34,12 +34,13 @@ jobs:
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
         xcodebuild archive \
           -workspace PopcornTime.xcworkspace \
-          -scheme TopShelf \
+          -scheme PopcornTimetvOS \
+          -destination generic \
           -configuration Debug \
           CODE_SIGN_IDENTITY='' \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
-          ONLY_ACTIVE_ARCH=NO \
+          CODE_SIGN_STYLE=MANUAL \
           | xcpretty
         
     - name: Package
