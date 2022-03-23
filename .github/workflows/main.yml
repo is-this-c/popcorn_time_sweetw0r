@@ -41,7 +41,8 @@ jobs:
     - name: Compile
       run: |
         sudo xcode-select -s /Applications/Xcode_12.5.1.app
-        xcodebuild clean archive \
+        xcodebuild archive \
+          -exportArchive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimeiOS \
           -sdk iphoneos \
