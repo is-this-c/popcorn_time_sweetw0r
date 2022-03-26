@@ -39,6 +39,9 @@ jobs:
           CODE_SIGN_IDENTITY= \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
+          EXPANDED_CODE_SIGN_IDENTITY= \
+          EXPANDED_CODE_SIGN_IDENTITY_NAME= \
+          EXPANDED_PROVISIONING_PROFILE= \
           VALID_ARCHS=arm64
         
     - name: Package
