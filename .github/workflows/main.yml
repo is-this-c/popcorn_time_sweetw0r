@@ -35,11 +35,11 @@ jobs:
         xcodebuild archive \
           -workspace PopcornTime.xcworkspace \
           -scheme PopcornTimetvOS \
-          -destination generic/platform=tvOS \
-          -configuration Debug \
-          CODE_SIGN_IDENTITY='' \
+          -configuration Release \
+          CODE_SIGN_IDENTITY= \
           CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO
+          CODE_SIGNING_ALLOWED=NO \
+          VALID_ARCHS=arm64
         
     - name: Package
       run: |
